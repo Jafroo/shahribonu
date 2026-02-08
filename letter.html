@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тихое письмо 💌 | Мир Шахрибону</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --beige: #f5f1e8;
+            --dark-blue: #1a365d;
+            --green: #2d5a27;
+            --lilac: #c8a2c8;
+            --light-lilac: #e6d4e6;
+            --gold: #d4af37;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f5f1e8 0%, #fff5f5 50%, #f0e6ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .envelope-container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            animation: fadeIn 3s ease-out forwards; /* Увеличенно с 2s до 3s */
+        }
+
+        .letter-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(200, 162, 200, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45, 90, 39, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(26, 54, 93, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--lilac);
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: float 20s infinite linear; /* Увеличенно с 15s до 20s */
+        }
+
+        .letter-paper {
+            background: linear-gradient(to bottom, var(--white) 0%, var(--beige) 100%);
+            max-width: 800px;
+            width: 100%;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.1),
+                0 0 100px rgba(200, 162, 200, 0.3);
+            position: relative;
+            transform: translateY(50px);
+            animation: slideUp 3s ease-out 1s forwards; /* Увеличенно с 1.5s до 3s, задержка с 0.5s до 1s */
+            border: 1px solid rgba(200, 162, 200, 0.2);
+        }
+
+        .letter-paper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(to right, transparent 95%, rgba(0,0,0,0.02) 100%),
+                linear-gradient(to bottom, transparent 95%, rgba(0,0,0,0.02) 100%);
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        .seal {
+            position: absolute;
+            top: -30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--lilac);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(200, 162, 200, 0.4);
+            animation: sealDrop 2s ease-out 2s forwards; /* Увеличенно с 1s до 2s, задержка с 1s до 2s */
+            transform: translateY(-100px);
+            opacity: 0;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .letter-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 2.5s forwards; /* Увеличенно с 1s до 2s, задержка с 1.5s до 2.5s */
+        }
+
+        .letter-header .date {
+            color: var(--green);
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 2.8s forwards; /* Увеличенно с 1s до 2s, задержка с 1.7s до 2.8s */
+        }
+
+        .letter-content {
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .letter-line {
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInRight 2s ease-out forwards; /* Увеличенно с 1s до 2s */
+        }
+
+        .letter-line:nth-child(1) { animation-delay: 3s; } /* Увеличенно с 2s до 3s */
+        .letter-line:nth-child(2) { animation-delay: 3.4s; } /* Увеличенно с 2.3s до 3.4s */
+        .letter-line:nth-child(3) { animation-delay: 3.8s; } /* Увеличенно с 2.6s до 3.8s */
+        .letter-line:nth-child(4) { animation-delay: 4.2s; } /* Увеличенно с 2.9s до 4.2s */
+        .letter-line:nth-child(5) { animation-delay: 4.6s; } /* Увеличенно с 3.2s до 4.6s */
+        .letter-line:nth-child(6) { animation-delay: 5s; } /* Увеличенно с 3.5s до 5s */
+        .letter-line:nth-child(7) { animation-delay: 5.4s; } /* Увеличенно с 3.8s до 5.4s */
+
+        .highlighted-word {
+            color: var(--dark-blue);
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlighted-word::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--lilac);
+            opacity: 0.3;
+            border-radius: 2px;
+        }
+
+        .signature {
+            margin-top: 5rem;
+            text-align: right;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 6s forwards; /* Увеличенно с 1s до 2s, задержка с 4.5s до 6s */
+        }
+
+        .signature-line {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .signature-date {
+            color: var(--green);
+            font-style: italic;
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2.5rem;
+            background: var(--lilac);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 6.5s forwards; /* Увеличенно с 1s до 2s, задержка с 5s до 6.5s */
+            box-shadow: 0 5px 20px rgba(200, 162, 200, 0.4);
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: var(--dark-blue);
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(200, 162, 200, 0.6);
+        }
+
+        .falling-petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .petal {
+            position: absolute;
+            background: linear-gradient(135deg, var(--lilac) 0%, var(--light-lilac) 100%);
+            border-radius: 50% 50% 50% 0;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        .music-player {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 7s forwards; /* Увеличенно с 1s до 2s, задержка с 5.5s до 7s */
+            transition: transform 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.1);
+        }
+
+        .music-player i {
+            color: var(--lilac);
+            font-size: 1.5rem;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes sealDrop {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            70% {
+                transform: translateY(10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-100vh) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .letter-paper {
+                padding: 2rem;
+            }
+
+            .letter-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .letter-content {
+                font-size: 1.1rem;
+            }
+
+            .seal {
+                width: 50px;
+                height: 50px;
+                top: -25px;
+                right: 20px;
+            }
+
+            .back-button {
+                width: 90%;
+                justify-content: center;
+            }
+
+            .music-player {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .letter-paper {
+                padding: 1.5rem;
+            }
+
+            .letter-header h1 {
+                font-size: 2rem;
+            }
+
+            .letter-line {
+                margin-bottom: 2rem;
+            }
+
+            .signature {
+                margin-top: 3rem;
+            }
+        }
+
+        /* Эффект рукописного текста */
+        .handwritten {
+            position: relative;
+        }
+
+        .handwritten::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 4s infinite; /* Увеличенно с 3s до 4s */
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фон с анимацией -->
+    <div class="letter-background"></div>
+
+    <!-- Падающие лепестки -->
+    <div class="falling-petals" id="petalsContainer"></div>
+
+    <!-- Плавающие сердечки -->
+    <div class="floating-hearts" id="heartsContainer"></div>
+
+    <!-- Контейнер письма -->
+    <div class="envelope-container">
+        <div class="letter-paper">
+            <!-- Суровая печать -->
+            <div class="seal">
+                <i class="fas fa-heart"></i>
+            </div>
+
+            <!-- Заголовок письма -->
+            <div class="letter-header">
+                <h1>Тихое письмо</h1>
+                <div class="date">Сегодня, сейчас, всегда</div>
+            </div>
+
+            <!-- Содержимое письма -->
+            <div class="letter-content">
+                <div class="letter-line">
+                    <p>Если ты когда-нибудь усомнишься в себе — просто вспомни: ты чья‑то самая красивая мысль. <span class="highlighted-word">Моя.</span></p>
+                </div>
+
+                <div class="letter-line">
+                    <p>Ты — это не только то, что ты делаешь или говоришь. Ты — <span class="highlighted-word">тихий свет</span>, который греет даже на расстоянии. Тот, что пробивается сквозь тучи усталости и напоминает: в мире есть тепло.</p>
+                </div>
+
+                <div class="letter-line">
+                    <p>Помни, что твоя ценность не зависит от достижений, ошибок или мнения других. <span class="highlighted-word">Ты ценна просто потому, что существуешь</span>. Не за что-то. Не благодаря чему-то. Просто потому что ты есть.</p>
+                </div>
+
+                <div class="letter-line">
+                    <p>Твои мечты — не наивные фантазии. Это <span class="highlighted-word">карта мест, где тебе предстоит быть счастливой</span>. Каждая из них — обещание, которое ты дала себе. И я верю, что ты его сдержишь.</p>
+                </div>
+
+                <div class="letter-line">
+                    <p>В тебе живёт редкая смесь: <span class="highlighted-word">нежность стали и прочность шёлка</span>. Ты можешь быть опорой для других, не теряя собственной мягкости. Это дар, которым обладают единицы.</p>
+                </div>
+
+                <div class="letter-line">
+                    <p>Пусть этот текст станет тем якорем, к которому можно вернуться в минуты сомнений. Сохрани его где-то в глубине телефона или сердца — и доставай, когда мир кажется слишком громким.</p>
+                </div>
+
+                <div class="letter-line">
+                    <p>Ты — невероятна. Не забывай об этом. <span class="highlighted-word">Никогда.</span></p>
+                </div>
+            </div>
+
+            <!-- Подпись -->
+            <div class="signature">
+                <div class="signature-line">С любовью и нежностью,</div>
+                <div class="signature-line">Тот, кто всегда верит в тебя</div>
+                <div class="signature-date">Бесконечность</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка возврата -->
+    <button class="back-button" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i>
+        Вернуться в мир
+    </button>
+
+    <!-- Кнопка музыки -->
+    <div class="music-player" onclick="toggleMusic()">
+        <i class="fas fa-music"></i>
+    </div>
+
+    <!-- Уведомление о музыке -->
+    <div class="music-notification" id="musicNotification">
+        <i class="fas fa-volume-up"></i>
+        <span>Музыка: Laylo - Ala Go'zlu'm</span>
+    </div>
+
+    <!-- Аудио элемент с несколькими источниками -->
+    <audio id="backgroundMusic" loop preload="auto">
+         Основной источник
+        <source src="https://audio.jukehost.co.uk/V1Cv9QQXYRc08Cj3gdlCPdfgFg6GBHhY" type="audio/mpeg">
+        <!-- Альтернативные источники -->
+        <source src="https://dl.dropbox.com/scl/fi/example/Laylo-Ala-Go-zlu-m.mp3" type="audio/mpeg">
+        <source src="Laylo_-_Ala_Go_zlu_m.mp3" type="audio/mpeg">
+        <source src="music/Laylo_-_Ala_Go_zlu_m.mp3" type="audio/mpeg">
+        <p>Ваш браузер не поддерживает аудио элемент.</p>
+    </audio>
+
+    <script>
+        // Генерация плавающих сердечек
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartsCount = 15;
+
+            for (let i = 0; i < heartsCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '♥';
+
+                // Случайная позиция
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+
+                // Случайная задержка анимации
+                heart.style.animationDelay = Math.random() * 15 + 's';
+
+                // Случайный размер
+                const size = 1 + Math.random() * 2;
+                heart.style.fontSize = size + 'rem';
+
+                // Случайный цветовой оттенок
+                const hue = 280 + Math.random() * 40 - 20;
+                heart.style.color = `hsl(${hue}, 60%, 70%)`;
+
+                container.appendChild(heart);
+            }
+        }
+
+        // Генерация падающих лепестков
+        function createPetals() {
+            const container = document.getElementById('petalsContainer');
+            const petalCount = 50;
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+
+                // Случайные размеры
+                const width = 10 + Math.random() * 20;
+                const height = 15 + Math.random() * 25;
+                petal.style.width = width + 'px';
+                petal.style.height = height + 'px';
+
+                // Случайная позиция
+                petal.style.left = Math.random() * 100 + 'vw';
+
+                // Случайная задержка
+                petal.style.animationDelay = Math.random() * 10 + 's';
+
+                // Случайная длительность анимации
+                const duration = 10 + Math.random() * 20;
+                petal.style.animationDuration = duration + 's';
+
+                // Случайный цвет
+                const opacity = 0.3 + Math.random() * 0.4;
+                petal.style.opacity = opacity;
+
+                // Случайный поворот
+                petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                container.appendChild(petal);
+            }
+        }
+
+        // Фоновая музыка
+        let musicPlaying = false;
+        const music = document.getElementById('backgroundMusic');
+        const musicBtn = document.querySelector('.music-player');
+        const musicNotification = document.getElementById('musicNotification');
+
+        function showMusicNotification() {
+            musicNotification.classList.add('show');
+            setTimeout(() => {
+                musicNotification.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                musicBtn.style.animation = 'pulse 0.3s ease';
+            } else {
+                // Попытка воспроизвести музыку
+                const playPromise = music.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicPlaying = true;
+                        musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                        showMusicNotification();
+                    }).catch(error => {
+                        console.log('Автовоспроизведение заблокировано:', error);
+                        // Показать уведомление о необходимости взаимодействия
+                        musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        showMusicNotification();
+
+                        // Предложить пользователю нажать еще раз
+                        setTimeout(() => {
+                            alert('Пожалуйста, нажмите на кнопку музыки еще раз для воспроизведения. Некоторые браузеры требуют дополнительного подтверждения.');
+                        }, 500);
+                    });
+                }
+            }
+
+            setTimeout(() => {
+                musicBtn.style.animation = '';
+            }, 300);
+        }
+
+        // Автоматическое воспроизведение с задержкой (если браузер разрешает)
+        function tryAutoPlay() {
+            setTimeout(() => {
+                if (!musicPlaying) {
+                    const playPromise = music.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            musicPlaying = true;
+                            musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                            showMusicNotification();
+                        }).catch(() => {
+                            // Если автовоспроизведение заблокировано, оставляем кнопку в состоянии "play"
+                            musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        });
+                    }
+                }
+            }, 2000);
+        }
+
+        // Возврат на главную страницу
+        function goBack() {
+            // Останавливаем музыку при возврате
+            if (musicPlaying) {
+                music.pause();
+                music.currentTime = 0;
+            }
+
+            // Анимация исчезновения
+            document.querySelector('.envelope-container').style.animation = 'fadeIn 1s ease-out reverse forwards';
+            document.querySelector('.back-button').style.animation = 'fadeIn 1s ease-out reverse forwards';
+            document.querySelector('.music-player').style.animation = 'fadeIn 1s ease-out reverse forwards';
+
+            // Задержка перед переходом
+            setTimeout(() => {
+                window.history.back();
+                // Альтернатива: window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        // Эффект печатной машинки для текста
+        function typewriterEffect() {
+            const lines = document.querySelectorAll('.letter-line p');
+            lines.forEach((line, index) => {
+                const text = line.innerHTML;
+                line.innerHTML = '';
+                const words = text.split(/(<span.*?>.*?<\/span>|\s+)/);
+                let i = 0;
+
+                function typeWord() {
+                    if (i < words.length) {
+                        const word = words[i];
+                        if (word.match(/<span.*?>.*?<\/span>/)) {
+                            line.innerHTML += word;
+                            i++;
+                            setTimeout(typeWord, 50);
+                        } else {
+                            line.innerHTML += word;
+                            i++;
+                            setTimeout(typeWord, 100 + Math.random() * 100);
+                        }
+                    }
+                }
+
+                // Начинаем печатать с задержкой для каждой строки
+                setTimeout(typeWord, index * 300 + 2000);
+            });
+        }
+
+        // Инициализация при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            createHearts();
+            createPetals();
+            setTimeout(typewriterEffect, 1500);
+
+            // Добавляем эффект мерцания для печати
+            setTimeout(() => {
+                const seal = document.querySelector('.seal');
+                seal.style.animation = 'pulse 2s infinite, sealDrop 1s ease-out 1s forwards';
+            }, 500);
+
+            // Пробуем автовоспроизведение музыки
+            tryAutoPlay();
+        });
+
+        // Обработка клавиш
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                goBack();
+            }
+            if (e.key === 'm' || e.key === 'M') {
+                toggleMusic();
+            }
+            if (e.key === ' ') { // Пробел
+                e.preventDefault();
+                toggleMusic();
+            }
+        });
+
+        // Параллакс эффект для фона
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            document.querySelector('.letter-background').style.transform =
+                `translate(${x * 20 - 10}px, ${y * 20 - 10}px)`;
+
+            document.querySelector('.letter-paper').style.transform =
+                `translateY(0) rotate3d(${y - 0.5}, ${x - 0.5}, 0, 0.5deg)`;
+        });
+
+        // Событие окончания загрузки музыки
+        music.addEventListener('loadeddata', function() {
+            console.log('Музыка загружена, продолжительность:', Math.floor(music.duration), 'секунд');
+        });
+
+        // Событие ошибки загрузки музыки
+        music.addEventListener('error', function(e) {
+            console.log('Ошибка загрузки музыки:', e);
+            musicBtn.style.display = 'none'; // Скрываем кнопку если музыка недоступна
+
+            // Показываем сообщение пользователю
+            const notification = document.createElement('div');
+            notification.className = 'music-notification show';
+            notification.innerHTML = '<i class="fas fa-exclamation-triangle"></i><span>Музыка временно недоступна</span>';
+            notification.style.top = '100px';
+            notification.style.right = '30px';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        });
+
+        // Информация о текущей песне
+        music.addEventListener('play', function() {
+            console.log('Воспроизводится: Laylo - Ala Go\'zlu\'m');
+        });
+    </script>
+</body>
+</html>
