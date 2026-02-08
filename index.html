@@ -6988,13 +6988,16 @@ AhVf2xKGHGJm1eNoM0tjZM2rx8sRoyc47yc+sgxjtJxMtLBA84LZbtLOD2lrkQP/2Q==" alt="Ша�
         });
         
         // Показ/скрытие кнопки прокрутки вверх
-        const scrollTopBtn = document.getElementById('scrollTop');
+        const scrollTopBtn = document.querySelector('scroll-top');
+        const letterBtn = document.querySelector('letter-button');
         
-        window.addEventListener('scroll', function() {
-            if(window.pageYOffset > 300) {
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
                 scrollTopBtn.classList.add('visible');
+                letterBtn.classList.add('visible');
             } else {
                 scrollTopBtn.classList.remove('visible');
+                letterBtn.classList.remove('visible');
             }
             
             // Анимация появления секций при прокрутке
