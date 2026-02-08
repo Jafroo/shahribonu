@@ -6,7 +6,6 @@
     <title>Тихое письмо 💌 | Мир Шахрибону</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         * {
             margin: 0;
@@ -32,7 +31,6 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            touch-action: manipulation;
         }
 
         .envelope-container {
@@ -43,7 +41,7 @@
             justify-content: center;
             padding: 2rem;
             opacity: 0;
-            animation: fadeIn 3s ease-out forwards;
+            animation: fadeIn 2s ease-out forwards;
         }
 
         .letter-background {
@@ -70,7 +68,7 @@
             color: var(--lilac);
             font-size: 1.5rem;
             opacity: 0;
-            animation: float 20s infinite linear;
+            animation: float 15s infinite linear;
         }
 
         .letter-paper {
@@ -84,7 +82,7 @@
                 0 0 100px rgba(200, 162, 200, 0.3);
             position: relative;
             transform: translateY(50px);
-            animation: slideUp 3s ease-out 1s forwards;
+            animation: slideUp 1.5s ease-out 0.5s forwards;
             border: 1px solid rgba(200, 162, 200, 0.2);
         }
 
@@ -116,7 +114,7 @@
             color: white;
             font-size: 1.5rem;
             box-shadow: 0 5px 20px rgba(200, 162, 200, 0.4);
-            animation: sealDrop 2s ease-out 2s forwards;
+            animation: sealDrop 1s ease-out 1s forwards;
             transform: translateY(-100px);
             opacity: 0;
         }
@@ -133,14 +131,14 @@
             color: var(--dark-blue);
             margin-bottom: 1.5rem;
             opacity: 0;
-            animation: fadeInUp 2s ease-out 2.5s forwards;
+            animation: fadeInUp 1s ease-out 1.5s forwards;
         }
 
         .letter-header .date {
             color: var(--green);
             font-style: italic;
             opacity: 0;
-            animation: fadeInUp 2s ease-out 2.8s forwards;
+            animation: fadeInUp 1s ease-out 1.7s forwards;
         }
 
         .letter-content {
@@ -152,16 +150,16 @@
             margin-bottom: 2.5rem;
             opacity: 0;
             transform: translateX(-30px);
-            animation: slideInRight 2s ease-out forwards;
+            animation: slideInRight 1s ease-out forwards;
         }
 
-        .letter-line:nth-child(1) { animation-delay: 3s; }
-        .letter-line:nth-child(2) { animation-delay: 3.4s; }
-        .letter-line:nth-child(3) { animation-delay: 3.8s; }
-        .letter-line:nth-child(4) { animation-delay: 4.2s; }
-        .letter-line:nth-child(5) { animation-delay: 4.6s; }
-        .letter-line:nth-child(6) { animation-delay: 5s; }
-        .letter-line:nth-child(7) { animation-delay: 5.4s; }
+        .letter-line:nth-child(1) { animation-delay: 2s; }
+        .letter-line:nth-child(2) { animation-delay: 2.3s; }
+        .letter-line:nth-child(3) { animation-delay: 2.6s; }
+        .letter-line:nth-child(4) { animation-delay: 2.9s; }
+        .letter-line:nth-child(5) { animation-delay: 3.2s; }
+        .letter-line:nth-child(6) { animation-delay: 3.5s; }
+        .letter-line:nth-child(7) { animation-delay: 3.8s; }
 
         .highlighted-word {
             color: var(--dark-blue);
@@ -187,7 +185,7 @@
             text-align: right;
             position: relative;
             opacity: 0;
-            animation: fadeIn 2s ease-out 6s forwards;
+            animation: fadeIn 1s ease-out 4.5s forwards;
         }
 
         .signature-line {
@@ -219,10 +217,9 @@
             align-items: center;
             gap: 10px;
             opacity: 0;
-            animation: fadeIn 2s ease-out 6.5s forwards;
+            animation: fadeIn 1s ease-out 5s forwards;
             box-shadow: 0 5px 20px rgba(200, 162, 200, 0.4);
             z-index: 1000;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .back-button:hover {
@@ -264,9 +261,8 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             opacity: 0;
-            animation: fadeIn 2s ease-out 7s forwards;
+            animation: fadeIn 1s ease-out 5.5s forwards;
             transition: transform 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
         }
 
         .music-player:hover {
@@ -276,41 +272,6 @@
         .music-player i {
             color: var(--lilac);
             font-size: 1.5rem;
-        }
-
-        /* Уведомление о музыке */
-        .music-notification {
-            position: fixed;
-            top: 100px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 1001;
-            opacity: 0;
-            transform: translateX(100px);
-            transition: all 0.5s ease;
-            border: 1px solid rgba(200, 162, 200, 0.3);
-            max-width: 300px;
-        }
-
-        .music-notification.show {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .music-notification i {
-            color: var(--lilac);
-            font-size: 1.2rem;
-        }
-
-        .music-notification span {
-            font-size: 0.9rem;
-            color: var(--dark-blue);
         }
 
         /* Анимации */
@@ -418,17 +379,6 @@
                 width: 50px;
                 height: 50px;
             }
-
-            .music-notification {
-                top: 80px;
-                right: 20px;
-                left: 20px;
-                transform: translateX(0) translateY(-100px);
-            }
-
-            .music-notification.show {
-                transform: translateX(0) translateY(0);
-            }
         }
 
         @media (max-width: 480px) {
@@ -462,7 +412,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 4s infinite;
+            animation: shimmer 3s infinite;
         }
 
         @keyframes shimmer {
@@ -470,16 +420,28 @@
             100% { transform: translateX(100%); }
         }
 
-        /* Для мобильных устройств - улучшение касаний */
-        @media (hover: none) and (pointer: coarse) {
-            .back-button:active,
-            .music-player:active {
-                transform: scale(0.95);
-            }
+        /* Уведомление о музыке */
+        .music-notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+            animation: slideInRight 0.5s ease-out;
+        }
 
-            .back-button:hover {
-                transform: translateX(-50%);
-            }
+        .music-notification.show {
+            display: flex;
+        }
+
+        .music-notification i {
+            color: var(--lilac);
         }
     </style>
 </head>
@@ -561,7 +523,7 @@
     <!-- Уведомление о музыке -->
     <div class="music-notification" id="musicNotification">
         <i class="fas fa-volume-up"></i>
-        <span id="notificationText">Нажмите для воспроизведения музыки</span>
+        <span>Музыка: Laylo - Ala Go'zlu'm</span>
     </div>
 
     <!-- Аудио элемент с несколькими источниками -->
@@ -573,8 +535,6 @@
         <source src="Laylo_-_Ala_Go_zlu_m.mp3" type="audio/mpeg">
         <source src="music/Laylo_-_Ala_Go_zlu_m.mp3" type="audio/mpeg">
         <p>Ваш браузер не поддерживает аудио элемент.</p>
-    </audio>
-
     </audio>
 
     <script>
@@ -643,79 +603,69 @@
             }
         }
 
-        // Фоновая музыка - ФИКС ДЛЯ МОБИЛЬНЫХ
+        // Фоновая музыка
         let musicPlaying = false;
-        let musicInitialized = false;
         const music = document.getElementById('backgroundMusic');
         const musicBtn = document.querySelector('.music-player');
         const musicNotification = document.getElementById('musicNotification');
-        const notificationText = document.getElementById('notificationText');
 
-        // Показываем уведомление
-        function showNotification(message) {
-            notificationText.textContent = message;
+        function showMusicNotification() {
             musicNotification.classList.add('show');
             setTimeout(() => {
                 musicNotification.classList.remove('show');
             }, 3000);
         }
 
-        // Инициализация музыки при первом взаимодействии пользователя
-        function initializeMusic() {
-            if (musicInitialized) return;
-
-            // Устанавливаем громкость
-            music.volume = 0.7;
-            musicInitialized = true;
-
-            // Показываем уведомление
-            showNotification('Музыка готова к воспроизведению');
-
-            console.log('Музыка инициализирована');
-        }
-
-        // Воспроизведение/пауза музыки
         function toggleMusic() {
-            // Инициализируем музыку при первом нажатии
-            initializeMusic();
-
             if (musicPlaying) {
-                // Останавливаем музыку
                 music.pause();
-                musicPlaying = false;
                 musicBtn.innerHTML = '<i class="fas fa-music"></i>';
-                showNotification('Музыка приостановлена');
+                musicBtn.style.animation = 'pulse 0.3s ease';
             } else {
-                // Пробуем запустить музыку
+                // Попытка воспроизвести музыку
                 const playPromise = music.play();
 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
-                        // Успешно воспроизводим
                         musicPlaying = true;
                         musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                        showNotification('Воспроизводится фоновая музыка');
+                        showMusicNotification();
                     }).catch(error => {
-                        // Ошибка воспроизведения
-                        console.log('Ошибка воспроизведения:', error);
-                        musicPlaying = false;
-                        musicBtn.innerHTML = '<i class="fas fa-music"></i>';
+                        console.log('Автовоспроизведение заблокировано:', error);
+                        // Показать уведомление о необходимости взаимодействия
+                        musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        showMusicNotification();
 
-                        // Для мобильных устройств - специальное сообщение
-                        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                            showNotification('Нажмите еще раз для включения музыки');
-                        } else {
-                            showNotification('Нажмите для воспроизведения музыки');
-                        }
+                        // Предложить пользователю нажать еще раз
+                        setTimeout(() => {
+                            alert('Пожалуйста, нажмите на кнопку музыки еще раз для воспроизведения. Некоторые браузеры требуют дополнительного подтверждения.');
+                        }, 500);
                     });
                 }
             }
 
-            // Анимация кнопки
-            musicBtn.style.animation = 'pulse 0.3s ease';
             setTimeout(() => {
                 musicBtn.style.animation = '';
             }, 300);
+        }
+
+        // Автоматическое воспроизведение с задержкой (если браузер разрешает)
+        function tryAutoPlay() {
+            setTimeout(() => {
+                if (!musicPlaying) {
+                    const playPromise = music.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            musicPlaying = true;
+                            musicBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                            showMusicNotification();
+                        }).catch(() => {
+                            // Если автовоспроизведение заблокировано, оставляем кнопку в состоянии "play"
+                            musicBtn.innerHTML = '<i class="fas fa-play"></i>';
+                        });
+                    }
+                }
+            }, 2000);
         }
 
         // Возврат на главную страницу
@@ -723,7 +673,7 @@
             // Останавливаем музыку при возврате
             if (musicPlaying) {
                 music.pause();
-                musicPlaying = false;
+                music.currentTime = 0;
             }
 
             // Анимация исчезновения
@@ -734,6 +684,7 @@
             // Задержка перед переходом
             setTimeout(() => {
                 window.history.back();
+                // Альтернатива: window.location.href = 'index.html';
             }, 1000);
         }
 
@@ -778,13 +729,8 @@
                 seal.style.animation = 'pulse 2s infinite, sealDrop 1s ease-out 1s forwards';
             }, 500);
 
-            // Для мобильных устройств - предварительная инициализация при любом касании
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                document.addEventListener('touchstart', function initMusicOnTouch() {
-                    initializeMusic();
-                    document.removeEventListener('touchstart', initMusicOnTouch);
-                }, { once: true });
-            }
+            // Пробуем автовоспроизведение музыки
+            tryAutoPlay();
         });
 
         // Обработка клавиш
@@ -813,35 +759,34 @@
                 `translateY(0) rotate3d(${y - 0.5}, ${x - 0.5}, 0, 0.5deg)`;
         });
 
-        // Обработка касаний для мобильных устройств
-        document.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                const x = e.touches[0].clientX / window.innerWidth;
-                const y = e.touches[0].clientY / window.innerHeight;
-
-                document.querySelector('.letter-background').style.transform =
-                    `translate(${x * 20 - 10}px, ${y * 20 - 10}px)`;
-
-                document.querySelector('.letter-paper').style.transform =
-                    `translateY(0) rotate3d(${y - 0.5}, ${x - 0.5}, 0, 0.5deg)`;
-            }
-        });
-
         // Событие окончания загрузки музыки
         music.addEventListener('loadeddata', function() {
-            console.log('Музыка загружена');
+            console.log('Музыка загружена, продолжительность:', Math.floor(music.duration), 'секунд');
         });
 
         // Событие ошибки загрузки музыки
         music.addEventListener('error', function(e) {
             console.log('Ошибка загрузки музыки:', e);
-            showNotification('Музыка временно недоступна');
+            musicBtn.style.display = 'none'; // Скрываем кнопку если музыка недоступна
+
+            // Показываем сообщение пользователю
+            const notification = document.createElement('div');
+            notification.className = 'music-notification show';
+            notification.innerHTML = '<i class="fas fa-exclamation-triangle"></i><span>Музыка временно недоступна</span>';
+            notification.style.top = '100px';
+            notification.style.right = '30px';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
         });
 
-        // Автоматическая инициализация при загрузке страницы для десктопов
-        if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            setTimeout(initializeMusic, 2000);
-        }
+        // Информация о текущей песне
+        music.addEventListener('play', function() {
+            console.log('Воспроизводится: Laylo - Ala Go\'zlu\'m');
+        });
     </script>
 </body>
 </html>
